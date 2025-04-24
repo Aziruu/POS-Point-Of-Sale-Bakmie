@@ -1,5 +1,5 @@
 <!-- resources/views/bakmie/index.blade.php -->
-@extends('layouts.app') <!-- Menggunakan layout app.blade.php -->
+@extends('layouts.adminlte')
 
 @section('content') <!-- Mulai bagian konten -->
     <h1 class="text-2xl font-bold mb-4">Daftar Bakmie</h1>
