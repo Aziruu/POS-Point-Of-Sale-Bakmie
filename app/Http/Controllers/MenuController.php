@@ -6,12 +6,14 @@ use App\Models\Menu;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MenuController extends Controller
 {
+    use SoftDeletes;
     public function index()
     {
-        $menus = Menu::all();
+        $menus = Menu::whereNull('deleted_at')->get();
         return view('dashboard.menu.index', compact('menus'));
     }
 

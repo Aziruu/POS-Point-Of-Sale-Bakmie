@@ -24,7 +24,15 @@
                                 <tbody>
                                         @foreach ($users as $index => $user)
                                         <tr>
-                                                <td></td>
+                                                <td>
+                                                        <img 
+                                                        src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('images/default.png') }}"  
+                                                        alt="Profile" 
+                                                        width="40" 
+                                                        height="40" 
+                                                        class="rounded-circle" 
+                                                        style="object-fit: cover;">
+                                                </td>
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ ucfirst($user->role) }}</td>

@@ -5,9 +5,14 @@
         <div class="card-body">
                 <h2 class="card-title mb-4">Edit User</h2>
 
-                <form action="{{ route('users.update', $user->id) }}" method="POST">
+                <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+
+                        <div class="mb-3">
+                                <label for="photo" class="form-label">Foto Profile</label>
+                                <input type="file" class="form-control" name="photo">
+                        </div>
 
                         <div class="mb-3">
                                 <label>Nama</label>
