@@ -62,7 +62,7 @@
                                                         <input
                                                                 type="text"
                                                                 class="form-control bg-transparent border-0"
-                                                                placeholder="Search projects" />
+                                                                placeholder="Search Someting :3" />
                                                 </div>
                                         </form>
                                 </div>
@@ -333,6 +333,18 @@
                                                                 </li>
                                                         </ul>
                                                 </div>
+                                        </li>
+                                        <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('pemasok.index')}}">
+                                                        <span class="menu-title">Pemasok</span>
+                                                        <i class="fa fa-briefcase menu-icon"></i>
+                                                </a>
+                                        </li>
+                                        <li class="nav-item">
+                                                <a class="nav-link" href="{{ route('barang.index')}}">
+                                                        <span class="menu-title">Barang</span>
+                                                        <i class="fa fa-archive menu-icon"></i>
+                                                </a>
                                         </li>
                                 </ul>
                         </nav>

@@ -27,7 +27,7 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        return view('categories.edit', compact('category'));
+        return view('dashboard.categories.edit', compact('category'));
     }
 
     public function update(Request $request, Category $category)

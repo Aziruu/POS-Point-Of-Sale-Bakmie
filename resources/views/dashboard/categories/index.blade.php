@@ -9,7 +9,7 @@
                 <div class="card-body">
                         <h4 class="card-title">Daftar Kategori yang dibuat</h4>
                         <p class="card-description d-flex mt-1 mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, eos consequuntur ipsa facilis vitae dolor?</p>
-                        <a href="{{ route('categories.create') }}" class="btn btn-info mb-3">+ Tambah Kategori</a>
+                        <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">+ Tambah Kategori</a>
                         @if(session('success')) <div class="alert alert-success">{{ session('success') }}</div> @endif
                         <table class="table">
                                 <thead>

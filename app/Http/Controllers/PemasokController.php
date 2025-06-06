@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pemasok;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PemasokController extends Controller
 {
@@ -63,5 +64,15 @@ class PemasokController extends Controller
     {
         $pemasok->delete();
         return redirect('/pemasok')->with('success', 'pemasok dihapus');
+    }
+
+    public function exportPdf()
+    {
+        $pemasoks = Pemasok::all();
+
+        $pdf = Pdf::loadView('dashboard.pemasok.pdf', compact('pemasoks'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download('data_pemasok.pdf');
     }
 }

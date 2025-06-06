@@ -27,7 +27,7 @@
                                                                 <i class="fa fa-star"></i>
                                                                 <i class="fa fa-star"></i>
                                                         </div>
-                                                        <button type="button" class="btn btn-inverse-warning btn-sm w-100 mt-2">Pesan</button>
+                                                        <button type="button" class="btn btn-success btn-sm w-100 mt-2">Pesan</button>
                                                 </div>
                                         </div>
                                 </div>
@@ -61,7 +61,7 @@
                                 <form action="{{ route('order.confirm') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="items" id="checkout-items">
-                                        <button type="submit" class="btn btn-inverse-success mt-3 w-100">Pesan Sekarang</button>
+                                        <button type="submit" class="btn btn-primary mt-3 w-100">Pesan Sekarang</button>
                                 </form>
                         </div>
                 </div>

@@ -1,20 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<h2>Edit Barang</h2>
-<form method="POST" action="{{ route('barang.update', $barang->id) }}">
-    @csrf @method('PUT')
-    <input type="text" name="nama" value="{{ $barang->nama }}"><br>
-    <select name="pemasok_id">
-        @foreach($pemasoks as $p)
-            <option value="{{ $p->id }}" {{ $barang->pemasok_id == $p->id ? 'selected' : '' }}>
-                {{ $p->nama }}
-            </option>
-        @endforeach
-    </select><br>
-    <input type="number" name="stok" value="{{ $barang->stok }}"><br>
-    <input type="number" name="harga" value="{{ $barang->harga }}"><br>
-    <button type="submit">Update</button>
-</form>
-
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Edit Barang</h4>
+        <form action="{{ route('barang.update', $barang->id) }}" method="POST">
+            @csrf @method('PUT')
+            <div class="form-group mb-2">
+                <label>Nama Barang</label>
+                <input type="text" name="nama" class="form-control" value="{{ $barang->nama }}" required>
+            </div>
+            <div class="form-group mb-2">
+                <label>Stok</label>
+                <input type="number" name="stok" class="form-control" value="{{ $barang->stok }}" required>
+            </div>
+            <div class="form-group mb-2">
+                <label>Harga</label>
+                <input type="number" name="harga" class="form-control" value="{{ $barang->harga }}" required>
+            </div>
+            <button class="btn btn-success">Update</button>
+            <a href="{{ route('barang.index') }}" class="btn btn-light">Kembali</a>
+        </form>
+    </div>
+</div>
 @endsection

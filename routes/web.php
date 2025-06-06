@@ -78,5 +78,13 @@ Route::prefix('/users')->group(function () {
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
-Route::resource('pemasok', PemasokController::class);
-Route::resource('barang', BarangController::class);
+Route::resource('pemasok', PemasokController::class)->except(['show']);
+Route::resource('barang', BarangController::class)->except(['show']);
+
+Route::get('pemasok/export-pdf', [PemasokController::class, 'exportPdf'])->name('pemasok.exportPdf');
+Route::get('pemasok/export-excel', [PemasokController::class, 'exportExcel'])->name('pemasok.exportExcel');
+Route::post('pemasok/import-excel', [PemasokController::class, 'importExcel'])->name('pemasok.importExcel');
+
+Route::get('barang/export-pdf', [BarangController::class, 'exportPdf'])->name('barang.exportPdf');
+Route::get('barang/export-excel', [BarangController::class, 'exportExcel'])->name('barang.exportExcel');
+Route::post('barang/import-excel', [BarangController::class, 'importExcel'])->name('barang.importExcel');

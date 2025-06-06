@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Barang;
 use App\Models\Pemasok;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BarangController extends Controller
 {
@@ -69,5 +70,15 @@ class BarangController extends Controller
     {
         $barang->delete();
         return redirect('/barang')->with('success', 'Barang dihapus');
+    }
+
+    public function exportPdf()
+    {
+        $barangs = Barang::all();
+
+        $pdf = Pdf::loadView('dashboard.barang.pdf', compact('barangs'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download('data_barang.pdf');
     }
 }

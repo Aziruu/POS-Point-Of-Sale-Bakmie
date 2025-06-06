@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
                         <!-- Tombol Buat Menu Baru -->
                         <h4 class="card-title">Daftar Menu yang Ada !</h2>
                                 <p class="card-description d-flex mt-1 mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, eos consequuntur ipsa facilis vitae dolor?</p>
-                                <a href="{{ route('menu.create') }}" class="btn btn-success mb-4 mt-2">
+                                <a href="{{ route('menu.create') }}" class="btn btn-primary mb-4 mt-2">
                                         + Tambah Menu
                                 </a>
                                 <table class="table">
@@ -73,8 +73,8 @@ use Illuminate\Support\Str;
                 text: "Tindakan ini tidak bisa dibatalkan!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#bfc1c2",
                 confirmButtonText: "Ya, hapus!"
         }).then((result) => {
                 if (result.isConfirmed) {

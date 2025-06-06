@@ -1,12 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<h2>lorem</h2>
-<form action="{{ route('pemasok.update', $pemasok->id) }}" method="POST">
-        @csrf @method('PUT')
-        <input type="text" name="nama" placeholder="Nama" value="{{ $pemasok->nama }}"><br>
-        <input type="text" name="telepon" placeholder="Telepon" value="{{ $pemasok->telepon }}"><br>
-        <textarea name="alamat" placeholder="Alamat" value="{{ $pemasok->alamat }}"></textarea><br>
-        <button type="sumbit">Update</button>
-</form>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Edit Pemasok</h4>
+        <form action="{{ route('pemasok.update', $pemasok->id) }}" method="POST">
+            @csrf @method('PUT')
+            <div class="form-group mb-2">
+                <label>Nama Pemasok</label>
+                <input type="text" name="nama" class="form-control" value="{{ $pemasok->nama }}" required>
+            </div>
+            <div class="form-group mb-2">
+                <label>Alamat</label>
+                <textarea name="alamat" class="form-control" required>{{ $pemasok->alamat }}</textarea>
+            </div>
+            <div class="form-group mb-2">
+                <label>Nomor HP</label>
+                <input type="text" name="telepon" class="form-control" value="{{ $pemasok->telepon }}" required>
+            </div>
+            <button class="btn btn-success">Update</button>
+            <a href="{{ route('pemasok.index') }}" class="btn btn-secondary">Kembali</a>
+        </form>
+    </div>
+</div>
 @endsection

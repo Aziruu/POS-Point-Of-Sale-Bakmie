@@ -10,8 +10,8 @@
                                 <label>Nama Kategori</label>
                                 <input type="text" name="name" class="form-control" required>
                         </div>
-                        <button class="btn btn-primary">Simpan</button>
-                        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Kembali</a>
+                        <button class="btn btn-success">Simpan</button>
+                        <a href="{{ route('categories.index') }}" class="btn btn-light">Kembali</a>
                 </form>
         </div>
 </div>
