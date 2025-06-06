@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-3 align-self-end">
             <button type="submit" class="btn btn-primary">Filter</button>
-            <a href="{{ route('transaction.laporan') }}" class="btn btn-secondary">Reset</a>
+            <a href="{{ route(auth()->user()->role . '.transaction.laporan') }}" class="btn btn-secondary">Reset</a>
         </div>
     </form>
 
@@ -53,7 +53,7 @@
                             <td>{{ $i + 1 }}</td>
                             <td>{{ $order->created_at->format('d M Y H:i') }}</td>
                             <td>{{ $order->order_number }}</td>
-                            <td>{{ $item->menu->name }}</td>
+                            <td>{{ optional($item->menu)->name ?? 'Menu dihapus' }}</td>
                             <td>{{ $item->quantity }}</td>
                             <td>Rp{{ number_format($item->price) }}</td>
                             <td>Rp{{ number_format($item->price * $item->quantity) }}</td>

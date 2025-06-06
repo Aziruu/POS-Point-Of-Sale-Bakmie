@@ -9,6 +9,7 @@ class UserController extends Controller
 {
     public function index()
     {
+        $users = User::all();
         return view('dashboard.users.index', compact('users'));
     }
 
@@ -29,7 +30,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users'. ($user->id ?? ''),
             'password' => 'required|string|min:6',
-            'role' =>   'required|string|in:admin,operator,user,kasir',
+            'role' =>   'required|string|in:admin,user,kasir',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 

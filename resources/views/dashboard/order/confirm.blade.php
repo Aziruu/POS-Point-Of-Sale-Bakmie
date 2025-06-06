@@ -27,7 +27,7 @@
                         </table>
                         <h4 class="mt-3">Total Harga: Rp{{ number_format($total) }}</h4>
 
-                        <form id="orderForm" action="{{ route('order.store') }}" method="POST">
+                        <form id="orderForm" action="{{ route($storeRoute) }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="items" value="{{ json_encode($items) }}">
                                 <input type="hidden" name="cash_amount" id="hidden_cash_amount">

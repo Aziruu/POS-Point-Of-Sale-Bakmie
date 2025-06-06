@@ -12,18 +12,26 @@ class TransactionController extends Controller
     public function history()
     {
         $orders = Order::with(['items.menu'])->latest()->get();
+
+        foreach ($orders as $order) {
+            $order->items = $order->items->filter(fn($item) => $item->menu !== null);
+        }
+
         return view('dashboard.transaction.history', compact('orders'));
     }
 
     public function print($id)
     {
         $order = Order::with('items.menu')->findOrFail($id);
+        $order->items = $order->items->filter(fn($item) => $item->menu !== null);
+
         return view('dashboard.transaction.print', compact('order'));
     }
 
     public function pdf($id)
     {
         $order = Order::with('items.menu')->findOrFail($id);
+        $order->items = $order->items->filter(fn($item) => $item->menu !== null);
 
         $pdf = PDF::loadView('dashboard.transaction.print', compact('order'));
 
@@ -43,6 +51,10 @@ class TransactionController extends Controller
         }
 
         $orders = $query->orderBy('created_at', 'desc')->get();
+
+        foreach ($orders as $order) {
+            $order->items = $order->items->filter(fn($item) => $item->menu !== null);
+        }
 
         return view('dashboard.transaction.laporan', compact('orders'));
     }

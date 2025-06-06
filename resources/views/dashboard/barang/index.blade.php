@@ -15,6 +15,7 @@
                 + Tambah Barang
             </a>
             <a href="{{ route('barang.exportPdf') }}" class="btn btn-danger mb-4 mt-2">Export PDF</a>
+
             <table class="table table-hover">
                 <thead>
                     <tr>

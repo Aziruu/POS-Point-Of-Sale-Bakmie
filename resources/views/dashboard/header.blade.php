@@ -276,76 +276,78 @@
                                                         <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                                                 </a>
                                         </li>
-                                        {{-- @if(auth()->user()->role === 'admin')
-                                        <!-- menu admin -->
-                                        @endif
 
-                                        @if(in_array(auth()->user()->role, [ 'kasir']))
-                                        <!-- menu operator & kasir -->
-                                        @endif
+<li class="nav-item">
+    <a class="nav-link" href="{{ route(auth()->user()->role . '.dashboard') }}">
+        <span class="menu-title">Dashboard</span>
+        <i class="mdi mdi-home menu-icon"></i>
+    </a>
+</li>
 
-                                        @if(auth()->user()->role === 'user')
-                                        <!-- menu user biasa -->
-                                        @endif --}}
-                                        <li class="nav-item">
-                                                <a class="nav-link " href="{{ route('dashboard')}}">
-                                                        <span class="menu-title">Dashboard</span>
-                                                        <i class="mdi mdi-home menu-icon"></i>
-                                                </a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('menu.index')}}">
-                                                        <span class="menu-title bg">Menu</span>
-                                                        <i class="fa fa-book menu-icon"></i>
-                                                </a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('order.index')}}">
-                                                        <span class="menu-title">Order</span>
-                                                        <i class="fa fa-cutlery menu-icon"></i>
-                                                </a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('categories.index')}}">
-                                                        <span class="menu-title">Kategori</span>
-                                                        <i class="fa fa-list menu-icon"></i>
-                                                </a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('users.index')}}">
-                                                        <span class="menu-title">Manage User</span>
-                                                        <i class="fa fa-users menu-icon"></i>
-                                                </a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                                                        <span class="menu-title">Transaction</span>
-                                                        <i class="menu-arrow"></i>
-                                                        <i class="fa fa-clock-o menu-icon"></i>
-                                                </a>
-                                                <div class="collapse" id="ui-basic">
-                                                        <ul class="nav flex-column sub-menu">
-                                                                <li class="nav-item">
-                                                                <a class="nav-link" href="{{ route('transaction.history')}}">Transaksi</a>
-                                                                </li>
-                                                                <li class="nav-item">
-                                                                <a class="nav-link" href="{{ route('transaction.laporan')}}">Laporan Transaksi</a>
-                                                                </li>
-                                                        </ul>
-                                                </div>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('pemasok.index')}}">
-                                                        <span class="menu-title">Pemasok</span>
-                                                        <i class="fa fa-briefcase menu-icon"></i>
-                                                </a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('barang.index')}}">
-                                                        <span class="menu-title">Barang</span>
-                                                        <i class="fa fa-archive menu-icon"></i>
-                                                </a>
-                                        </li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('menu.index') }}">
+        <span class="menu-title">Menu</span>
+        <i class="fa fa-book menu-icon"></i>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ route(auth()->user()->role . '.order.index') }}">
+        <span class="menu-title">Order</span>
+        <i class="fa fa-cutlery menu-icon"></i>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('categories.index') }}">
+        <span class="menu-title">Kategori</span>
+        <i class="fa fa-list menu-icon"></i>
+    </a>
+</li>
+
+@if(auth()->user()->role === 'admin')
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('users.index') }}">
+        <span class="menu-title">Manage User</span>
+        <i class="fa fa-users menu-icon"></i>
+    </a>
+</li>
+@endif
+
+<li class="nav-item">
+    <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-title">Transaction</span>
+        <i class="menu-arrow"></i>
+        <i class="fa fa-clock-o menu-icon"></i>
+    </a>
+    <div class="collapse" id="ui-basic">
+        <ul class="nav flex-column sub-menu">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route(auth()->user()->role . '.transaction.history')}}">History Transaksi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route(auth()->user()->role . '.transaction.laporan') }}">Laporan Transaksi</a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+@if(auth()->user()->role === 'admin')
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('pemasok.index') }}">
+        <span class="menu-title">Pemasok</span>
+        <i class="fa fa-briefcase menu-icon"></i>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('barang.index') }}">
+        <span class="menu-title">Barang</span>
+        <i class="fa fa-archive menu-icon"></i>
+    </a>
+</li>
+@endif
+
                                 </ul>
                         </nav>
                         <!--      Content Isi Template -->

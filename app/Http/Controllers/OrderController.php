@@ -7,16 +7,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
     public function index()
     {
+        if (Auth::user()->role == 'admin') {
+            $confirmRoute = 'admin.order.confirm';
+        } elseif (Auth::user()->role == 'kasir') {
+            $confirmRoute = 'kasir.order.confirm';
+        } else {
+            $confirmRoute = 'user.order.confirm';
+        }
+
         $menus = Menu::all(); // Untuk ditampilkan di sebelah kanan sebagai card
         $cart = session()->get('cart', []); // Checkout kiri
 
-        return view('dashboard.order.index', compact('menus', 'cart'));
+        return view('dashboard.order.index', compact('menus', 'cart', 'confirmRoute'));
     }
 
     public function add(Request $request, $id)
@@ -54,7 +63,7 @@ class OrderController extends Controller
     {
         // Di sini kamu bisa proses simpan ke DB (transaksi)
         session()->forget('cart');
-        return redirect()->route('order.index')->with('success', 'Pesanan berhasil!');
+        return redirect()->route(Auth::user()->role . '.order.index')->with('success', 'Pesanan berhasil!');
     }
 
     public function confirm(Request $request)
@@ -62,7 +71,7 @@ class OrderController extends Controller
         $items = json_decode($request->items, true);
 
         if (!$items || count($items) === 0) {
-            return redirect()->route('order.index')->with('error', 'Tidak ada item yang dipilih.');
+            return redirect()->route(Auth::user()->role . '.order.index')->with('error', 'Tidak ada item yang dipilih.');
         }
 
         $total = 0;
@@ -71,9 +80,16 @@ class OrderController extends Controller
             $total += $items[$id]['subtotal'];
         }
 
+        $storeRoute = match (Auth::user()->role) {
+            'admin' => 'admin.order.store',
+            'kasir' => 'kasir.order.store',
+            default => 'user.order.store'
+        };
+
         return view('dashboard.order.confirm', [
             'items' => $items,
-            'total' => $total
+            'total' => $total,
+            'storeRoute' => $storeRoute,
         ]);
     }
 
@@ -124,6 +140,6 @@ class OrderController extends Controller
             ]);
         }
 
-        return redirect()->route('order.index')->with('success', 'Pesanan berhasil dibuat.');
+        return redirect()->route(Auth::user()->role . '.order.index')->with('success', 'Pesanan berhasil dibuat.');
     }
 }

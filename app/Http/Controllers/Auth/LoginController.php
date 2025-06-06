@@ -22,31 +22,23 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-    
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard'); // atau sesuai route kamu
-        }
-    
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ]);
 
-        // Coba login
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate(); // buat session baru
-
-            // Redirect berdasarkan role user
+            // Ambil role user setelah berhasil login
             $role = Auth::user()->role;
 
+            // Redirect berdasarkan role
             return match ($role) {
-                'admin' => redirect('/admin'),
-                'cust' => redirect('/cust'),
-                default => redirect('/'),
+                'admin' => redirect()->route('admin.dashboard'),
+                'kasir' => redirect()->route('kasir.dashboard'),
+                'user'  => redirect()->route('user.dashboard'),
+                default => redirect('/'), // fallback
             };
         }
 
-        // Kalau gagal login, kembalikan error
+        // Gagal login
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ])->onlyInput('email');
@@ -57,10 +49,10 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::logout(); // Logout
-        $request->session()->invalidate(); // Invalidate session
-        $request->session()->regenerateToken(); // Regenerate token
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return redirect('/login'); // Redirect ke halaman login
+        return redirect('/login');
     }
 }

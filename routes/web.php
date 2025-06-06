@@ -1,90 +1,101 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PemasokController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\UserController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\{
+    HomeController,
+    MenuController,
+    OrderController,
+    AdminController,
+    CustomerController,
+    Auth\LoginController,
+    BarangController,
+    CategoryController,
+    DashboardController,
+    PemasokController,
+    TransactionController,
+    UserController
+};
 
 // Routes Login
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login'); // Halaman login
+Route::get('/', [LoginController::class, 'showLoginForm']);
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout'); // Logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// Admin Routes
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
 
+    // Manajemen Menu & Kategori
+    Route::resource('menu', MenuController::class)->except(['show']);
+    Route::resource('categories', CategoryController::class)->except(['show']);
+    Route::resource('barang', BarangController::class)->except(['show']);
+    Route::get('barang/export-pdf', [BarangController::class, 'exportPdf'])->name('barang.exportPdf');
+    Route::resource('pemasok', PemasokController::class)->except(['show']);
+    Route::get('pemasok/export-pdf', [PemasokController::class, 'exportPdf'])->name('pemasok.exportPdf');
 
-// Route Role
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    // route khusus admin
+    // Manajemen User
+    Route::resource('user', UserController::class)->except(['show'])->names([
+        'index' => 'users.index',
+        'create' => 'users.create',
+        'store' => 'users.store',
+        'edit' => 'users.edit',
+        'update' => 'users.update',
+        'destroy' => 'users.destroy',
+    ]);
+
+    // Order
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/order', 'index')->name('admin.order.index');
+        Route::post('/order/add/{id}', 'add')->name('admin.order.add');
+        Route::post('/order/remove/{id}', 'remove')->name('admin.order.remove');
+        Route::post('/order/checkout', 'checkout')->name('admin.order.checkout');
+        Route::post('/order/confirm', 'confirm')->name('admin.order.confirm');
+        Route::post('/order/store', 'store')->name('admin.order.store');
+    });
+
+    // Transaksi
+    Route::controller(TransactionController::class)->group(function() {
+        Route::get('/transaction-history', 'history')->name('admin.transaction.history');
+        Route::get('/laporan-transaction',  'laporan')->name('admin.transaction.laporan');
+        Route::get('/transaction/{id}/print', 'print')->name('admin.transaction.print');
+        Route::get('/transaction/{id}/pdf', 'pdf')->name('admin.transaction.pdf');
+    });
 });
 
-Route::middleware(['auth', 'role:kasir'])->group(function () {
-    // route khusus operator & kasir
+// Kasir Routes
+Route::prefix('kasir')->middleware(['auth', 'role:kasir'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'kasir'])->name('kasir.dashboard');
+
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/order', 'index')->name('kasir.order.index');
+        Route::post('/order/add/{id}', 'add')->name('kasir.order.add');
+        Route::post('/order/remove/{id}', 'remove')->name('kasir.order.remove');
+        Route::post('/order/checkout', 'checkout')->name('kasir.order.checkout');
+        Route::post('/order/confirm', 'confirm')->name('kasir.order.confirm');
+        Route::post('/order/store', 'store')->name('kasir.order.store');
+    });
+
+    Route::controller(TransactionController::class)->group(function() {
+        Route::get('/transaction-history', 'history')->name('kasir.transaction.history');
+        Route::get('/laporan-transaction',  'laporan')->name('kasir.transaction.laporan');
+        Route::get('/transaction/{id}/print', 'print')->name('kasir.transaction.print');
+        Route::get('/transaction/{id}/pdf', 'pdf')->name('kasir.transaction.pdf');
+    });
 });
 
-Route::middleware(['auth'])->group(function () {
-    // route umum untuk semua user yang login
+// User Routes
+Route::prefix('user')->middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'user'])->name('user.dashboard');
+
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/order', 'index')->name('user.order.index');
+        Route::post('/order/add/{id}', 'add')->name('user.order.add');
+        Route::post('/order/remove/{id}', 'remove')->name('user.order.remove');
+        Route::post('/order/checkout', 'checkout')->name('user.order.checkout');
+        Route::post('/order/confirm', 'confirm')->name('user.order.confirm');
+        Route::post('/order/store', 'store')->name('user.order.store');
+    });
+
+    Route::get('/transaction-history', [TransactionController::class, 'history'])->name('user.transaction.history');
 });
-
-
-// Home dashboard route
-Route::get('/', [DashboardController::class, 'index']);
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-// Resource routes
-
-//  Routes Menu
-Route::resource('menu', MenuController::class)->except(['show']);
-
-// Route Category
-Route::resource('categories', CategoryController::class)->except(['show']);
-
-//  Routes Order
-Route::get('/order', [OrderController::class, 'index'])->name('order.index');
-Route::post('/order/add/{id}', [OrderController::class, 'add'])->name('order.add');
-Route::post('/order/remove/{id}', [OrderController::class, 'remove'])->name('order.remove');
-
-Route::post('/order/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
-Route::post('/order/confirm', [OrderController::class, 'confirm'])->name('order.confirm');
-
-Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
-
-// Routes History - Laporan
-Route::get('/transaction-history', [TransactionController::class, 'history'])->name('transaction.history');
-Route::get('/laporan-transaction', [TransactionController::class, 'laporan'])->name('transaction.laporan');
-
-Route::get('/transaction/{id}/print', [TransactionController::class, 'print'])->name('transaction.print');
-Route::get('/transaction/{id}/pdf', [TransactionController::class, 'pdf'])->name('transaction.pdf');
-
-// Manage User
-
-Route::prefix('/users')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('users.index');
-    Route::get('/', [UserController::class, 'showUsers'])->name('users.index');
-    Route::get('/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/', [UserController::class, 'store'])->name('users.store');
-    Route::get('/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-});
-
-Route::resource('pemasok', PemasokController::class)->except(['show']);
-Route::resource('barang', BarangController::class)->except(['show']);
-
-Route::get('pemasok/export-pdf', [PemasokController::class, 'exportPdf'])->name('pemasok.exportPdf');
-Route::get('pemasok/export-excel', [PemasokController::class, 'exportExcel'])->name('pemasok.exportExcel');
-Route::post('pemasok/import-excel', [PemasokController::class, 'importExcel'])->name('pemasok.importExcel');
-
-Route::get('barang/export-pdf', [BarangController::class, 'exportPdf'])->name('barang.exportPdf');
-Route::get('barang/export-excel', [BarangController::class, 'exportExcel'])->name('barang.exportExcel');
-Route::post('barang/import-excel', [BarangController::class, 'importExcel'])->name('barang.importExcel');

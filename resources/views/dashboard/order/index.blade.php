@@ -58,7 +58,7 @@
                                         <strong>Total Harga:</strong>
                                         <strong id="grand-total">Rp0</strong>
                                 </div>
-                                <form action="{{ route('order.confirm') }}" method="POST">
+                                <form action="{{ route($confirmRoute) }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="items" id="checkout-items">
                                         <button type="submit" class="btn btn-primary mt-3 w-100">Pesan Sekarang</button>
