@@ -7,8 +7,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -21,8 +23,18 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout'); // L
 
 
 // Route Role
-// Route::middleware(['auth', 'checkRole:admin'])->get('/admin', [AdminController::class, 'index']);
-// Route::middleware(['auth', 'checkRole:cashier'])->get('/cust', [CustomerController::class, 'index']);
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // route khusus admin
+});
+
+Route::middleware(['auth', 'role:kasir'])->group(function () {
+    // route khusus operator & kasir
+});
+
+Route::middleware(['auth'])->group(function () {
+    // route umum untuk semua user yang login
+});
+
 
 // Home dashboard route
 Route::get('/', [DashboardController::class, 'index']);
@@ -65,3 +77,6 @@ Route::prefix('/users')->group(function () {
     Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
+
+Route::resource('pemasok', PemasokController::class);
+Route::resource('barang', BarangController::class);

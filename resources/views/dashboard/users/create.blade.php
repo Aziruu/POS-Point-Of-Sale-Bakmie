@@ -29,6 +29,7 @@
                                 <select name="role" class="form-control" required>
                                         <option value="admin">Admin</option>
                                         <option value="kasir">Kasir</option>
+                                        <option value="user">User</option>
                                 </select>
                         </div>
 

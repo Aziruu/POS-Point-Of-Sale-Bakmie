@@ -276,6 +276,17 @@
                                                         <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                                                 </a>
                                         </li>
+                                        {{-- @if(auth()->user()->role === 'admin')
+                                        <!-- menu admin -->
+                                        @endif
+
+                                        @if(in_array(auth()->user()->role, [ 'kasir']))
+                                        <!-- menu operator & kasir -->
+                                        @endif
+
+                                        @if(auth()->user()->role === 'user')
+                                        <!-- menu user biasa -->
+                                        @endif --}}
                                         <li class="nav-item">
                                                 <a class="nav-link " href="{{ route('dashboard')}}">
                                                         <span class="menu-title">Dashboard</span>
