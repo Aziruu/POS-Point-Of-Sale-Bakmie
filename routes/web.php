@@ -60,6 +60,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
         Route::get('/laporan-transaction',  'laporan')->name('transaction.laporan');
         Route::get('/transaction/{id}/print', 'print')->name('transaction.print');
         Route::get('/transaction/{id}/pdf', 'pdf')->name('transaction.pdf');
+        Route::get('/laporan-transaction/pdf', 'laporanPdf')->name('transaction.laporan.pdf');
     });
 });
 
@@ -84,6 +85,7 @@ Route::prefix('kasir')->middleware(['auth', 'role:kasir'])->name('kasir.')->grou
         Route::get('/laporan-transaction',  'laporan')->name('transaction.laporan');
         Route::get('/transaction/{id}/print', 'print')->name('transaction.print');
         Route::get('/transaction/{id}/pdf', 'pdf')->name('transaction.pdf');
+        Route::get('/laporan-transaction/pdf', 'laporanPdf')->name('transaction.laporan.pdf');
     });
 });
 
@@ -105,5 +107,6 @@ Route::prefix('user')->middleware(['auth', 'role:user'])->group(function () {
         Route::get('/laporan-transaction',  'laporan')->name('user.transaction.laporan');
         Route::get('/transaction/{id}/print', 'print')->name('user.transaction.print');
         Route::get('/transaction/{id}/pdf', 'pdf')->name('user.transaction.pdf');
+        Route::get('/laporan-transaction/pdf', 'laporanPdf')->name('transaction.laporan.pdf');
     });
 });

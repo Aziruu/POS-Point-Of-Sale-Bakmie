@@ -21,8 +21,11 @@
             </select>
         </div>
         <div class="col-md-3 align-self-end">
-            <button type="submit" class="btn btn-primary">Filter</button>
-            <a href="{{ route(auth()->user()->role . '.transaction.laporan') }}" class="btn btn-secondary">Reset</a>
+            <div class="d-flex flex-wrap gap-1">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a href="{{ route(auth()->user()->role . '.transaction.laporan') }}" class="btn btn-secondary">Reset</a>
+                <a href="{{ route(auth()->user()->role . '.transaction.laporan.pdf', request()->query()) }}" class="btn btn-danger" target="_blank">PDF</a>
+            </div>
         </div>
     </form>
 

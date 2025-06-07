@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pemasok;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class PemasokController extends Controller
 {
@@ -37,7 +38,7 @@ class PemasokController extends Controller
         ]);
 
         Pemasok::create($data);
-        return redirect('/pemasok')->with('success', 'pemasok di tambahkan !');
+        return redirect()->route(Auth::user()->role . '.pemasok.index')->with('success', 'pemasok di tambahkan !');
     }
 
     /**
@@ -54,7 +55,7 @@ class PemasokController extends Controller
     public function update(Request $request, Pemasok $pemasok)
     {
         $pemasok->update($request->only(['nama', 'telepon', 'alamat']));
-        return redirect('/pemasok')->with('success', 'pemasok berhasil di update!');
+        return redirect()->route(Auth::user()->role . '.pemasok.index')->with('success', 'pemasok berhasil di update!');
     }
 
     /**
@@ -63,7 +64,7 @@ class PemasokController extends Controller
     public function destroy(Pemasok $pemasok)
     {
         $pemasok->delete();
-        return redirect('/pemasok')->with('success', 'pemasok dihapus');
+        return redirect()->route(Auth::user()->role . '.pemasok.index')->with('success', 'pemasok dihapus');
     }
 
     public function exportPdf()

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Barang;
 use App\Models\Pemasok;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
 {
@@ -41,7 +42,7 @@ class BarangController extends Controller
 
 
         Barang::create($request->only(['nama', 'harga', 'stok', 'pemasok_id']));
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan.');
+        return redirect()->route(Auth::user()->role . '.barang.index')->with('success', 'Barang berhasil ditambahkan.');
     }
 
 
@@ -60,7 +61,7 @@ class BarangController extends Controller
     public function update(Request $request, Barang $barang)
     {
         $barang->update($request->all());
-        return redirect('/barang')->with('success', 'Barang diupdate');
+        return redirect()->route(Auth::user()->role . '.barang.index')->with('success', 'Barang diupdate');
     }
 
     /**
@@ -69,7 +70,7 @@ class BarangController extends Controller
     public function destroy(Barang $barang)
     {
         $barang->delete();
-        return redirect('/barang')->with('success', 'Barang dihapus');
+        return redirect()->route(Auth::user()->role . '.barang.index')->with('success', 'Barang dihapus');
     }
 
     public function exportPdf()
