@@ -2,7 +2,7 @@
 
 @section('content')
 <h2 class="mb-5">Tambah Menu</h2>
-<form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route(auth()->user()->role . '.menu.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
                 <label for="name">Nama Menu</label>

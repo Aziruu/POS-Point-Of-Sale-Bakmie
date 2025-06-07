@@ -25,8 +25,10 @@
                     <td>{{ $order->items->sum('quantity') }}</td>
                     <td>Rp{{ number_format($order->total_price) }}</td>
                     <td>
+                        @if(auth()->user()->role === 'admin' || auth()->user()->role === 'kasir')
                         <a href="{{ route(auth()->user()->role . '.transaction.print', $order->id) }}" target="_blank" class="btn btn-sm btn-primary">Cetak</a>
                         <a href="{{ route(auth()->user()->role . '.transaction.pdf', $order->id) }}" class="btn btn-sm btn-danger">PDF</a>
+                        @endif
                         <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#detailModal{{ $order->id }}">Detail</button>
                     </td>
                 </tr>

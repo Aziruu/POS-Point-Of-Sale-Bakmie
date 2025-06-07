@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -47,7 +48,7 @@ class UserController extends Controller
             'photo' => $photoPath,
         ]);
 
-        return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan');
+        return redirect()->route(Auth::user()->role . '.user.index')->with('success', 'User berhasil ditambahkan');
     }
 
 
@@ -80,7 +81,7 @@ class UserController extends Controller
             'photo' => $photoPath,
         ]);
 
-        return redirect()->route('users.index')->with('success', 'User berhasil diupdate');
+        return redirect()->route(Auth::user()->role . '.user.index')->with('success', 'User berhasil diupdate');
     }
 
     public function destroy($id)
@@ -88,6 +89,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'User berhasil di hapus');
+        return redirect()->route(Auth::user()->role . '.user.index')->with('success', 'User berhasil di hapus');
     }
 }

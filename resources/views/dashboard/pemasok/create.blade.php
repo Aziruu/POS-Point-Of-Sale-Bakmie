@@ -2,7 +2,7 @@
 
 @section('content')
 <h2 class="mb-5">Tambah Pemasok</h2>
-<form action="{{ route('pemasok.store') }}" method="POST">
+<form action="{{ route(auth()->user()->role . '.pemasok.store') }}" method="POST">
     @csrf
     <div class="form-group">
         <label for="nama">Nama Pemasok</label>

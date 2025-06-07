@@ -283,31 +283,31 @@
         <i class="mdi mdi-home menu-icon"></i>
     </a>
 </li>
-
+@if(auth()->user()->role === 'admin' || auth()->user()->role === 'kasir')
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('menu.index') }}">
+    <a class="nav-link" href="{{ route(auth()->user()->role . '.menu.index') }}">
         <span class="menu-title">Menu</span>
         <i class="fa fa-book menu-icon"></i>
     </a>
 </li>
-
+@endif
 <li class="nav-item">
     <a class="nav-link" href="{{ route(auth()->user()->role . '.order.index') }}">
         <span class="menu-title">Order</span>
         <i class="fa fa-cutlery menu-icon"></i>
     </a>
 </li>
-
+@if(auth()->user()->role === 'admin' || auth()->user()->role === 'kasir')
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('categories.index') }}">
+    <a class="nav-link" href="{{ route(auth()->user()->role . '.categories.index') }}">
         <span class="menu-title">Kategori</span>
         <i class="fa fa-list menu-icon"></i>
     </a>
 </li>
-
+@endif
 @if(auth()->user()->role === 'admin')
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('users.index') }}">
+    <a class="nav-link" href="{{ route(auth()->user()->role . '.users.index') }}">
         <span class="menu-title">Manage User</span>
         <i class="fa fa-users menu-icon"></i>
     </a>
@@ -325,23 +325,25 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route(auth()->user()->role . '.transaction.history')}}">History Transaksi</a>
             </li>
+            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'kasir')
             <li class="nav-item">
                 <a class="nav-link" href="{{ route(auth()->user()->role . '.transaction.laporan') }}">Laporan Transaksi</a>
             </li>
+            @endif
         </ul>
     </div>
 </li>
 
 @if(auth()->user()->role === 'admin')
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('pemasok.index') }}">
+    <a class="nav-link" href="{{ route(auth()->user()->role . '.pemasok.index') }}">
         <span class="menu-title">Pemasok</span>
         <i class="fa fa-briefcase menu-icon"></i>
     </a>
 </li>
 
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('barang.index') }}">
+    <a class="nav-link" href="{{ route(auth()->user()->role . '.barang.index') }}">
         <span class="menu-title">Barang</span>
         <i class="fa fa-archive menu-icon"></i>
     </a>

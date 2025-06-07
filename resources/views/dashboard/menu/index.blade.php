@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
                         <!-- Tombol Buat Menu Baru -->
                         <h4 class="card-title">Daftar Menu yang Ada !</h2>
                                 <p class="card-description d-flex mt-1 mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, eos consequuntur ipsa facilis vitae dolor?</p>
-                                <a href="{{ route('menu.create') }}" class="btn btn-primary mb-4 mt-2">
+                                <a href="{{ route(auth()->user()->role . '.menu.create') }}" class="btn btn-primary mb-4 mt-2">
                                         + Tambah Menu
                                 </a>
                                 <table class="table">
@@ -46,10 +46,10 @@ use Illuminate\Support\Str;
                                                                 @endif
                                                         </td>
                                                         <td>
-                                                                <a href="{{ route('menu.edit', $menu->id) }}" class="btn btn-warning btn-sm">Edit <span class="p-1"></span>
+                                                                <a href="{{ route(auth()->user()->role . '.menu.edit', $menu->id) }}" class="btn btn-warning btn-sm">Edit <span class="p-1"></span>
                                                                         <i class="fa fa-pencil"></i>
                                                                 </a>
-                                                                <form id="delete-form-{{ $menu->id }}" action="{{ route('menu.destroy', $menu->id) }}" method="POST" style="display:inline-block;">
+                                                                <form id="delete-form-{{ $menu->id }}" action="{{ route(auth()->user()->role . '.menu.destroy', $menu->id) }}" method="POST" style="display:inline-block;">
                                                                         @csrf
                                                                         @method('DELETE')
                                                                         <button type="button" data-id="{{ $menu->id }}" onclick="confirmDelete(this)" class="btn btn-danger btn-sm">

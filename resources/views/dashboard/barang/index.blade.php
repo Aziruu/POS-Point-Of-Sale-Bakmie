@@ -11,10 +11,10 @@
             <p class="card-description d-flex mt-1 mb-2">
                 Daftar lengkap stok barang dan pemasok yang terdaftar.
             </p>
-            <a href="{{ route('barang.create') }}" class="btn btn-primary mb-4 mt-2">
+            <a href="{{ route(auth()->user()->role . '.barang.create') }}" class="btn btn-primary mb-4 mt-2">
                 + Tambah Barang
             </a>
-            <a href="{{ route('barang.exportPdf') }}" class="btn btn-danger mb-4 mt-2">Export PDF</a>
+            <a href="{{ route(auth()->user()->role . '.barang.exportPdf') }}" class="btn btn-danger mb-4 mt-2">Export PDF</a>
 
             <table class="table table-hover">
                 <thead>
@@ -36,8 +36,8 @@
                         <td>{{ $brg->stok }}</td>
                         <td>Rp{{ number_format($brg->harga, 0, ',', '.') }}</td>
                         <td>
-                            <a href="{{ route('barang.edit', $brg->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form id="delete-form-{{ $brg->id }}" action="{{ route('barang.destroy', $brg->id) }}" method="POST" style="display:inline-block;">
+                            <a href="{{ route(auth()->user()->role . '.barang.edit', $brg->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form id="delete-form-{{ $brg->id }}" action="{{ route(auth()->user()->role . '.barang.destroy', $brg->id) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="button" data-id="{{ $brg->id }}" onclick="confirmDelete(this)" class="btn btn-danger btn-sm">

@@ -2,7 +2,7 @@
 
 @section('content')
 <h2 class="mb-5">Edit Menu</h2>
-<form action="{{ route('menu.update', $menu->id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route(auth()->user()->role . '.menu.update', $menu->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group">

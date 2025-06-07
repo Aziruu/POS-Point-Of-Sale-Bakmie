@@ -4,7 +4,7 @@
 <div class="card">
         <div class="card-body">
                 <h2 class="card-title mb-4">Daftar Pengguna</h2>
-                <a href="{{ route('users.create') }}" class="btn btn-success mb-4 mt-2">
+                <a href="{{ route(auth()->user()->role . '.users.create') }}" class="btn btn-success mb-4 mt-2">
                         + Tambah User
                 </a>
 
@@ -39,9 +39,9 @@
                                                 {{-- <td>{{ $user->password }}</td> --}}
                                                 <td>{{ $user->created_at->format('d-m-Y H:i') }}</td>
                                                 <td>
-                                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                                        <a href="{{ route(auth()->user()->role . '.users.edit', $user->id) }}" class="btn btn-sm btn-warning">Edit</a>
 
-                                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus user ini?')">
+                                                        <form action="{{ route(auth()->user()->role . '.users.destroy', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus user ini?')">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn btn-sm btn-danger">Hapus</button>

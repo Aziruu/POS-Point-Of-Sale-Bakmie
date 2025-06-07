@@ -4,7 +4,7 @@
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Edit Pemasok</h4>
-        <form action="{{ route('pemasok.update', $pemasok->id) }}" method="POST">
+        <form action="{{ route(auth()->user()->role . '.pemasok.update', $pemasok->id) }}" method="POST">
             @csrf @method('PUT')
             <div class="form-group mb-2">
                 <label>Nama Pemasok</label>
@@ -19,7 +19,7 @@
                 <input type="text" name="telepon" class="form-control" value="{{ $pemasok->telepon }}" required>
             </div>
             <button class="btn btn-success">Update</button>
-            <a href="{{ route('pemasok.index') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route(auth()->user()->role . '.pemasok.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 </div>

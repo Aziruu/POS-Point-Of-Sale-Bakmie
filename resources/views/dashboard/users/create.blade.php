@@ -4,7 +4,7 @@
 <div class="card">
         <div class="card-body">
                 <h2 class="card-title mb-4">Tambah User</h2>
-                <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route(auth()->user()->role . '.users.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="mb-3">

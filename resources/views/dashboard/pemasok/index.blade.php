@@ -8,8 +8,8 @@
     <div class="card-body">
         <h4 class="card-title">Data Pemasok</h4>
         <p class="card-description">Berikut daftar pemasok aktif.</p>
-        <a href="{{ route('pemasok.create') }}" class="btn btn-primary mb-4 mt-2">+ Tambah Pemasok</a>
-        <a href="{{ route('pemasok.exportPdf') }}" class="btn btn-danger mb-4 mt-2">Export PDF</a>
+        <a href="{{ route(auth()->user()->role . '.pemasok.create') }}" class="btn btn-primary mb-4 mt-2">+ Tambah Pemasok</a>
+        <a href="{{ route(auth()->user()->role . '.pemasok.exportPdf') }}" class="btn btn-danger mb-4 mt-2">Export PDF</a>
         <table class="table">
             <thead>
                 <tr>
@@ -28,8 +28,8 @@
                     <td>{{ $pemasok->alamat }}</td>
                     <td>{{ $pemasok->telepon }}</td>
                     <td>
-                        <a href="{{ route('pemasok.edit', $pemasok->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('pemasok.destroy', $pemasok->id) }}" method="POST" style="display:inline-block;">
+                        <a href="{{ route(auth()->user()->role . '.pemasok.edit', $pemasok->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route(auth()->user()->role . '.pemasok.destroy', $pemasok->id) }}" method="POST" style="display:inline-block;">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                         </form>

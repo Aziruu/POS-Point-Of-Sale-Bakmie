@@ -5,7 +5,7 @@
         <div class="card-body">
                 <h2 class="card-title mb-4">Edit User</h2>
 
-                <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route(auth()->user()->role . '.users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 

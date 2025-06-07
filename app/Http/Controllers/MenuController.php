@@ -6,11 +6,18 @@ use App\Models\Menu;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
+use App\Http\Middleware\RoleMiddleware;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Routing\Middleware\MiddlewareGroups;
+use Illuminate\Routing\Controller as BaseController;
+
+#[\Illuminate\Routing\Middleware\MiddlewareGroup('web')]
+#[\Illuminate\Routing\Middleware\MiddlewareGroup('auth')]
+#[\Illuminate\Routing\Middleware\Middleware('role:admin,kasir')]
 class MenuController extends Controller
 {
-    use SoftDeletes;
     public function index()
     {
         $menus = Menu::whereNull('deleted_at')->get();
@@ -33,7 +40,7 @@ class MenuController extends Controller
         }
 
         session()->put('cart', $cart);
-        return redirect()->route('menu.index')->with('success', 'Menu ditambahkan ke pesanan.');
+        return redirect()->route(Auth::user()->role . '.menu.index')->with('success', 'Menu ditambahkan ke pesanan.');
     }
 
     public function create()
@@ -66,7 +73,7 @@ class MenuController extends Controller
         }
 
         Menu::create($validated);
-        return redirect()->route('menu.index')->with('success', 'Menu berhasil ditambahkan!');
+        return redirect()->route(Auth::user()->role . '.menu.index')->with('success', 'Menu berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id)
@@ -99,7 +106,7 @@ class MenuController extends Controller
 
         $menu->save();
 
-        return redirect()->route('menu.index')->with('success', 'Menu berhasil diperbarui.');
+        return redirect()->route(Auth::user()->role . '.menu.index')->with('success', 'Menu berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -111,6 +118,6 @@ class MenuController extends Controller
         }
 
         $menu->delete();
-        return redirect()->route('menu.index')->with('success', 'Menu berhasil dihapus.');
+        return redirect()->route(Auth::user()->role . '.menu.index')->with('success', 'Menu berhasil dihapus.');
     }
 }
